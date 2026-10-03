@@ -801,9 +801,11 @@ footer small { display: block; max-width: 62em; line-height: 1.6; }
 
 /* ---------------------------------------------------------------- works with */
 
-.partners { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+.partners { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; }
 
-@media (max-width: 1000px) { .partners { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1100px) { .partners { grid-template-columns: repeat(4, 1fr); } }
+
+@media (max-width: 760px) { .partners { grid-template-columns: repeat(3, 1fr); } }
 
 @media (max-width: 560px) { .partners { grid-template-columns: repeat(2, 1fr); } }
 
@@ -834,16 +836,20 @@ footer small { display: block; max-width: 62em; line-height: 1.6; }
   height: 44px;
   margin-bottom: 14px;
   border-radius: 10px;
-  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1), filter .3s;
+  color: var(--text-2);
+  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1), filter .45s, color .45s;
 }
 
-/* their own logos are in colour; the page is not, so they are shown in grey and
-   brighten when pointed at */
+/* the page is black and white, so the services' logos wait in grey - and bloom into
+   their own colours when pointed at. Raster logos fade their colour back in; the
+   one-colour marks take their brand colour from --brand. */
 .partner-logo.raster { filter: grayscale(1) brightness(.85) contrast(1.1); }
+
+.partner:hover .partner-logo { color: var(--brand, var(--text)); filter: drop-shadow(0 6px 18px color-mix(in srgb, var(--brand, #fff) 45%, transparent)); }
 
 .partner:hover .partner-logo { transform: scale(1.1) rotate(-4deg); }
 
-.partner:hover .partner-logo.raster { filter: grayscale(1) brightness(1.25) contrast(1.1); }
+.partner:hover .partner-logo.raster { filter: grayscale(0) brightness(1) contrast(1) drop-shadow(0 6px 18px rgba(255, 255, 255, .12)); }
 
 .partner b { color: var(--text); font: 700 17px/1.2 var(--display); }
 
