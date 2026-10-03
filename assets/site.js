@@ -1,6 +1,6 @@
 /*
  * Shared behaviour for every page: the release data from GitHub, telling which system the
- * visitor is on, the cobblestone block in the hero, and sections fading in on scroll.
+ * visitor is on, the logo tilting in the hero, and sections fading in on scroll.
  */
 (function () {
   'use strict';
@@ -120,84 +120,23 @@
     size: size
   };
 
-  // ------------------------------------------------------------ the block
+  // ------------------------------------------------------------ the logo
 
   /**
-   * Paints a cobblestone face onto a 16x16 canvas, the way the game's own texture is
-   * built: a few grey tones in irregular stones with dark mortar between them. Seeded,
-   * so every face is different but the same on every visit.
+   * Tilts the hero logo a few degrees towards the pointer, so the block seems to turn to
+   * look at you. The image itself is the real logo, untouched.
    */
-  function stoneTexture(seed) {
-    var canvas = document.createElement('canvas');
-    canvas.width = canvas.height = 16;
-    var ctx = canvas.getContext('2d');
-    var state = seed * 9301 + 49297;
-    function rand() {
-      state = (state * 9301 + 49297) % 233280;
-      return state / 233280;
-    }
-    var tones = ['#6e6e6e', '#7d7d7d', '#8c8c8c', '#9a9a9a', '#a9a9a9', '#5f5f5f'];
-    var mortar = ['#3d3d3d', '#474747', '#525252'];
-
-    // stones: random rectangles of one base tone, mottled
-    for (var y = 0; y < 16; y++) {
-      for (var x = 0; x < 16; x++) {
-        ctx.fillStyle = mortar[Math.floor(rand() * mortar.length)];
-        ctx.fillRect(x, y, 1, 1);
-      }
-    }
-    for (var i = 0; i < 14; i++) {
-      var w = 3 + Math.floor(rand() * 5);
-      var h = 2 + Math.floor(rand() * 4);
-      var sx = Math.floor(rand() * 16);
-      var sy = Math.floor(rand() * 16);
-      var base = Math.floor(rand() * (tones.length - 2)) + 1;
-      for (var yy = 0; yy < h; yy++) {
-        for (var xx = 0; xx < w; xx++) {
-          var px = (sx + xx) % 16;
-          var py = (sy + yy) % 16;
-          var edge = xx === 0 || yy === 0 || xx === w - 1 || yy === h - 1;
-          var t = base + (rand() < .3 ? 1 : 0) - (rand() < .2 ? 1 : 0) + (edge && rand() < .5 ? -1 : 0);
-          ctx.fillStyle = tones[Math.max(0, Math.min(tones.length - 1, t))];
-          ctx.fillRect(px, py, 1, 1);
-        }
-      }
-    }
-    return canvas.toDataURL();
-  }
-
-  function buildCube() {
-    var cube = document.querySelector('.cube');
-    if (!cube) return;
-    for (var i = 1; i <= 6; i++) {
-      var face = document.createElement('div');
-      face.className = 'face f' + i;
-      face.style.backgroundImage = 'url(' + stoneTexture(i * 7 + 3) + ')';
-      cube.appendChild(face);
-    }
-
+  function tiltLogo() {
+    var logo = document.querySelector('.logo-3d');
+    if (!logo) return;
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var angleX = -24, angleY = 38, targetX = -24, targetY = 38, spin = 0;
-    var stage = cube.parentElement;
-
-    // it follows the pointer a little, and turns slowly on its own the rest of the time
+    if (reduced) return;
     window.addEventListener('pointermove', function (event) {
-      var rect = stage.getBoundingClientRect();
+      var rect = logo.getBoundingClientRect();
       var dx = (event.clientX - (rect.left + rect.width / 2)) / window.innerWidth;
       var dy = (event.clientY - (rect.top + rect.height / 2)) / window.innerHeight;
-      targetY = 38 + dx * 50;
-      targetX = -24 - dy * 30;
+      logo.style.transform = 'rotateY(' + (dx * 22).toFixed(2) + 'deg) rotateX(' + (-dy * 16).toFixed(2) + 'deg)';
     }, { passive: true });
-
-    if (reduced) return;
-    function frame() {
-      spin += 0.12;
-      angleX += (targetX - angleX) * 0.06;
-      angleY += (targetY - angleY) * 0.06;
-      cube.style.transform = 'rotateX(' + angleX.toFixed(2) + 'deg) rotateY(' + (angleY + spin).toFixed(2) + 'deg)';
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
   }
 
   // ------------------------------------------------------------ reveal on scroll
@@ -220,7 +159,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    buildCube();
+    tiltLogo();
     reveal();
   });
 })();

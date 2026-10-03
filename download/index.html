@@ -7,7 +7,7 @@
 <meta name="description" content="Download Legism for Windows, Linux and macOS — installer, portable archive and disk images, straight from the latest GitHub release.">
 <link rel="icon" type="image/png" href="../images/favicon.png">
 <link rel="apple-touch-icon" href="../images/favicon.png">
-<meta name="theme-color" content="#0d0e10">
+<meta name="theme-color" content="#0a0a0a">
 <meta property="og:title" content="Download Legism">
 <meta property="og:description" content="Builds for Windows, Linux and macOS, straight from the latest GitHub release.">
 <meta property="og:image" content="https://legism.github.io/images/legism-logo.png">
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     text.innerHTML = 'This build should fit your system:<br><b style="color:var(--text)">' + NAMES[found.os]
       + '</b> · ' + mine.name;
-    slot.innerHTML = '<a class="btn btn-grass" href="' + L.assetUrl(release.tag, mine.name) + '">' + ICON
+    slot.innerHTML = '<a class="btn btn-primary" href="' + L.assetUrl(release.tag, mine.name) + '">' + ICON
       + 'Download ' + release.tag + ' <small>' + L.size(mine.size) + '</small></a>';
   });
 });

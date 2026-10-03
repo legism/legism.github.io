@@ -1,27 +1,25 @@
 /*
  * Legism site. One stylesheet for all three pages.
  *
- * Stone and grass: the logo is a cobblestone block, so the page is cut from the same
- * material - warm near-black stone, a faint pixel grain over everything, and one accent,
- * the green of a grass block's top, used only where something can be clicked or is good
- * news.
+ * Black and white: the logo is a grey cobblestone block, so the page is cut from the
+ * same material - near-black stone with a faint pixel grain, greys for everything
+ * secondary, and plain white for whatever can be clicked or matters most. No colour.
  */
 :root {
-  --stone-0: #0d0e10;
-  --stone-1: #141518;
-  --stone-2: #1b1d21;
-  --stone-3: #24272c;
-  --stone-4: #33373e;
+  --stone-0: #0a0a0a;
+  --stone-1: #121212;
+  --stone-2: #1a1a1a;
+  --stone-3: #242424;
+  --stone-4: #333333;
   --line: rgba(255, 255, 255, .08);
   --line-strong: rgba(255, 255, 255, .16);
-  --text: #eceae6;
-  --text-2: #a9a7a2;
-  --text-3: #75736f;
-  --grass: #7ccf5b;
-  --grass-deep: #4f9a37;
-  --grass-ink: #0f1a0a;
-  --dirt: #8a5a3b;
-  --bad: #c9665b;
+  --text: #f2f2f2;
+  --text-2: #a6a6a6;
+  --text-3: #707070;
+  --accent: #f2f2f2;
+  --accent-edge: #9a9a9a;
+  --accent-ink: #0a0a0a;
+  --mid: #5a5a5a;
   --radius: 14px;
   --radius-sm: 9px;
   --display: "Unbounded", "Manrope", system-ui, sans-serif;
@@ -41,7 +39,7 @@ body {
   /* the pixel grain: two offset 4px checkers at very low contrast read as stone, not as
      a pattern, and cost nothing to draw */
   background-image:
-    radial-gradient(1200px 600px at 75% -10%, rgba(124, 207, 91, .07), transparent 60%),
+    radial-gradient(1200px 600px at 75% -10%, rgba(255, 255, 255, .045), transparent 60%),
     linear-gradient(45deg, rgba(255,255,255,.012) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.012) 75%),
     linear-gradient(45deg, rgba(255,255,255,.012) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.012) 75%);
   background-size: auto, 8px 8px, 8px 8px;
@@ -55,9 +53,9 @@ a { color: inherit; }
 
 img { max-width: 100%; display: block; }
 
-::selection { background: var(--grass); color: var(--grass-ink); }
+::selection { background: var(--accent); color: var(--accent-ink); }
 
-:focus-visible { outline: 2px solid var(--grass); outline-offset: 3px; border-radius: 4px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
 .wrap { width: min(var(--wrap), 100% - 32px); margin-inline: auto; }
 
@@ -135,17 +133,17 @@ img { max-width: 100%; display: block; }
 
 .btn svg { width: 18px; height: 18px; flex: none; }
 
-/* the primary button is a grass block seen from the side: green top edge, earth below */
-.btn-grass {
-  background: var(--grass);
+/* the primary button: white, with a grey bottom edge like the shaded side of a block */
+.btn-primary {
+  background: var(--accent);
   border-color: transparent;
-  color: var(--grass-ink);
-  box-shadow: inset 0 -4px 0 var(--grass-deep), 0 10px 30px -10px rgba(124, 207, 91, .55);
+  color: var(--accent-ink);
+  box-shadow: inset 0 -4px 0 var(--accent-edge), 0 10px 30px -12px rgba(255, 255, 255, .25);
 }
 
-.btn-grass:hover { background: #8ad869; border-color: transparent; box-shadow: inset 0 -4px 0 var(--grass-deep), 0 14px 36px -10px rgba(124, 207, 91, .7); }
+.btn-primary:hover { background: #ffffff; border-color: transparent; box-shadow: inset 0 -4px 0 var(--accent-edge), 0 14px 36px -12px rgba(255, 255, 255, .35); }
 
-.btn-grass small { font-weight: 600; opacity: .7; }
+.btn-primary small { font-weight: 600; opacity: .7; }
 
 /* ---------------------------------------------------------------- hero */
 
@@ -175,8 +173,8 @@ img { max-width: 100%; display: block; }
 .eyebrow b {
   padding: 2px 8px;
   border-radius: 999px;
-  background: var(--grass);
-  color: var(--grass-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-size: 12px;
 }
 
@@ -187,10 +185,8 @@ img { max-width: 100%; display: block; }
 }
 
 .hero h1 .mark {
-  color: var(--grass);
-  /* a blocky underline, two pixels high, like a texture edge */
-  padding-bottom: .12em;
-  background: linear-gradient(var(--grass-deep), var(--grass-deep)) 0 100% / 100% 6px no-repeat;
+  /* grey rather than coloured: the second line stands out by contrast alone */
+  color: var(--text-3);
 }
 
 .hero .lead {
@@ -213,56 +209,49 @@ img { max-width: 100%; display: block; }
 
 .meta span { display: inline-flex; align-items: center; gap: 7px; }
 
-.meta svg { width: 15px; height: 15px; color: var(--grass); }
+.meta svg { width: 15px; height: 15px; color: var(--accent); }
 
 .meta a { color: var(--text-2); }
 
-/* the block */
+/* the logo, standing in for itself: the real image, floating and tilting a little
+   towards the pointer */
 
-.cube-stage {
+.logo-stage {
   position: relative;
-  height: 400px;
-  perspective: 1100px;
+  height: 420px;
+  perspective: 900px;
   display: grid;
   place-items: center;
 }
 
-.cube-stage::after {
+.logo-stage::after {
   /* its shadow on the ground */
   content: "";
   position: absolute;
-  bottom: 30px;
-  width: 260px;
-  height: 46px;
+  bottom: 26px;
+  width: 250px;
+  height: 40px;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(0,0,0,.75), transparent);
+  background: radial-gradient(closest-side, rgba(0,0,0,.85), transparent);
   filter: blur(4px);
+  animation: shadow 6s ease-in-out infinite;
 }
 
-.cube {
-  --size: 210px;
-  position: relative;
-  width: var(--size);
-  height: var(--size);
+.logo-float { animation: float 6s ease-in-out infinite; }
+
+.logo-3d {
+  width: 340px;
+  height: auto;
   transform-style: preserve-3d;
-  transform: rotateX(-24deg) rotateY(38deg);
-  animation: float 6s ease-in-out infinite;
+  transition: transform .25s ease-out;
+  filter: drop-shadow(0 30px 40px rgba(0,0,0,.55));
+  will-change: transform;
 }
 
-.cube .face {
-  position: absolute;
-  inset: 0;
-  background-size: 100% 100%;
-  image-rendering: pixelated;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
+@keyframes shadow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(.86); opacity: .7; }
 }
-
-.cube .f1 { transform: translateZ(calc(var(--size) / 2)); filter: brightness(.92); }
-.cube .f2 { transform: rotateY(90deg) translateZ(calc(var(--size) / 2)); filter: brightness(.72); }
-.cube .f3 { transform: rotateY(180deg) translateZ(calc(var(--size) / 2)); filter: brightness(.6); }
-.cube .f4 { transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)); filter: brightness(.8); }
-.cube .f5 { transform: rotateX(90deg) translateZ(calc(var(--size) / 2)); filter: brightness(1.08); }
-.cube .f6 { transform: rotateX(-90deg) translateZ(calc(var(--size) / 2)); filter: brightness(.45); }
 
 @keyframes float {
   0%, 100% { translate: 0 0; }
@@ -272,9 +261,9 @@ img { max-width: 100%; display: block; }
 @media (max-width: 900px) {
   .hero { padding-top: 44px; }
   .hero .wrap { grid-template-columns: 1fr; }
-  .cube-stage { height: 280px; order: -1; }
-  .cube { --size: 150px; }
-  .cube-stage::after { width: 190px; bottom: 18px; }
+  .logo-stage { height: 290px; order: -1; }
+  .logo-3d { width: 220px; }
+  .logo-stage::after { width: 170px; bottom: 16px; }
 }
 
 /* ---------------------------------------------------------------- library band */
@@ -310,8 +299,8 @@ img { max-width: 100%; display: block; }
   content: "";
   width: 9px;
   height: 9px;
-  background: var(--grass);
-  box-shadow: 9px 9px 0 var(--dirt);
+  background: var(--accent);
+  box-shadow: 9px 9px 0 var(--mid);
   margin-right: 8px;
 }
 
@@ -326,7 +315,7 @@ section { padding: 96px 0 0; }
   align-items: center;
   gap: 10px;
   margin: 0 0 14px;
-  color: var(--grass);
+  color: var(--accent);
   font: 700 13px/1 var(--body);
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -398,7 +387,7 @@ h2 {
   margin-bottom: 18px;
   border-radius: 10px;
   background: var(--stone-3);
-  color: var(--grass);
+  color: var(--accent);
   box-shadow: inset 0 -3px 0 rgba(0,0,0,.3);
 }
 
@@ -447,17 +436,17 @@ h2 {
 
 .compare thead th { color: var(--text-2); font-size: 14px; font-weight: 700; background: var(--stone-2); }
 
-.compare thead th.us { color: var(--grass-ink); background: var(--grass); }
+.compare thead th.us { color: var(--accent-ink); background: var(--accent); }
 
 .compare tbody th { text-align: left; font-weight: 600; color: var(--text); }
 
-.compare td.us { background: rgba(124, 207, 91, .06); }
+.compare td.us { background: rgba(255, 255, 255, .04); }
 
 .yes, .no { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 7px; }
 
-.yes { background: rgba(124, 207, 91, .16); color: var(--grass); }
+.yes { background: var(--accent); color: var(--accent-ink); }
 
-.no { background: rgba(201, 102, 91, .12); color: var(--bad); }
+.no { background: var(--stone-3); color: var(--text-3); }
 
 .yes svg, .no svg { width: 15px; height: 15px; }
 
@@ -481,7 +470,7 @@ h2 {
 
 .os:hover { border-color: var(--line-strong); transform: translateY(-2px); background: var(--stone-2); }
 
-.os.mine { border-color: var(--grass); box-shadow: 0 0 0 1px var(--grass), 0 18px 50px -24px rgba(124, 207, 91, .6); }
+.os.mine { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 18px 50px -24px rgba(255, 255, 255, .25); }
 
 .os svg { width: 30px; height: 30px; margin-bottom: 10px; }
 
@@ -494,8 +483,8 @@ h2 {
   margin-top: 12px;
   padding: 3px 9px;
   border-radius: 6px;
-  background: var(--grass);
-  color: var(--grass-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-size: 12px;
   font-weight: 800;
   font-style: normal;
@@ -547,7 +536,7 @@ h2 {
 
 .faq details p { margin: 0; padding: 0 22px 20px; color: var(--text-2); }
 
-.faq a, .prose a { color: var(--grass); }
+.faq a, .prose a { color: var(--text); text-decoration-color: var(--text-3); text-underline-offset: 3px; }
 
 /* community and people */
 
@@ -599,21 +588,21 @@ h2 {
   border: 1px solid var(--line);
   border-radius: 22px;
   background:
-    linear-gradient(180deg, rgba(124, 207, 91, .1), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, .05), transparent 70%),
     var(--stone-1);
   text-align: center;
   overflow: hidden;
 }
 
 .final::before {
-  /* a strip of grass along the top edge, pixel by pixel */
+  /* a pixel strip along the top edge, like the edge of a block */
   content: "";
   position: absolute;
   inset: 0 0 auto;
   height: 10px;
   background:
-    linear-gradient(90deg, var(--grass) 50%, var(--grass-deep) 50%) 0 0 / 20px 6px repeat-x,
-    linear-gradient(var(--grass), var(--grass)) 0 0 / 100% 4px no-repeat;
+    linear-gradient(90deg, var(--accent) 50%, var(--accent-edge) 50%) 0 0 / 20px 6px repeat-x,
+    linear-gradient(var(--accent), var(--accent)) 0 0 / 100% 4px no-repeat;
 }
 
 .final h2 { margin: 0 auto; }
@@ -660,7 +649,7 @@ footer small { display: block; max-width: 62em; line-height: 1.6; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background:
-    linear-gradient(120deg, rgba(124, 207, 91, .09), transparent 55%),
+    linear-gradient(120deg, rgba(255, 255, 255, .05), transparent 55%),
     var(--stone-1);
 }
 
@@ -698,9 +687,9 @@ footer small { display: block; max-width: 62em; line-height: 1.6; }
   transition: border-color .15s, background .15s;
 }
 
-.file:hover { border-color: var(--grass); background: var(--stone-2); }
+.file:hover { border-color: var(--accent); background: var(--stone-2); }
 
-.file svg { width: 18px; height: 18px; color: var(--grass); flex: none; }
+.file svg { width: 18px; height: 18px; color: var(--accent); flex: none; }
 
 .file b { font-size: 15px; }
 
@@ -738,7 +727,7 @@ footer small { display: block; max-width: 62em; line-height: 1.6; }
   top: 8px;
   bottom: 8px;
   width: 2px;
-  background: linear-gradient(var(--grass), var(--line) 30%);
+  background: linear-gradient(var(--accent), var(--line) 30%);
 }
 
 .release {
@@ -760,7 +749,7 @@ footer small { display: block; max-width: 62em; line-height: 1.6; }
   box-shadow: inset 0 -3px 0 rgba(0,0,0,.35);
 }
 
-.release.latest::before { background: var(--grass); box-shadow: inset 0 -3px 0 var(--grass-deep); }
+.release.latest::before { background: var(--accent); box-shadow: inset 0 -3px 0 var(--accent-edge); }
 
 .rel-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px; }
 
@@ -769,8 +758,8 @@ footer small { display: block; max-width: 62em; line-height: 1.6; }
 .rel-latest {
   padding: 3px 8px;
   border-radius: 6px;
-  background: var(--grass);
-  color: var(--grass-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-size: 12px;
   font-weight: 800;
 }
@@ -791,11 +780,11 @@ footer small { display: block; max-width: 62em; line-height: 1.6; }
 
 .notes li { margin: 4px 0; }
 
-.notes li::marker { color: var(--grass); }
+.notes li::marker { color: var(--accent); }
 
 .notes strong { color: var(--text); }
 
-.notes a, .rel-links a { color: var(--grass); }
+.notes a, .rel-links a { color: var(--text); text-underline-offset: 3px; }
 
 .rel-links { margin: 18px 0 0; font-size: 14px; font-weight: 700; }
 
