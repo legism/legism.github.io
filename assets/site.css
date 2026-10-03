@@ -799,6 +799,68 @@ footer small { display: block; max-width: 62em; line-height: 1.6; }
 
 .state { color: var(--text-3); }
 
+/* ---------------------------------------------------------------- works with */
+
+.partners { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+
+@media (max-width: 1000px) { .partners { grid-template-columns: repeat(3, 1fr); } }
+
+@media (max-width: 560px) { .partners { grid-template-columns: repeat(2, 1fr); } }
+
+.partner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 22px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--stone-1);
+  color: var(--text-2);
+  text-decoration: none;
+  transition: border-color .25s, transform .2s ease-out, background .25s, color .25s, box-shadow .3s;
+}
+
+.partner:hover {
+  border-color: var(--line-strong);
+  background: var(--stone-2);
+  color: var(--text);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px);
+  box-shadow: 0 24px 50px -28px rgba(0, 0, 0, .9);
+}
+
+.partner-logo {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1), filter .3s;
+}
+
+/* their own logos are in colour; the page is not, so they are shown in grey and
+   brighten when pointed at */
+.partner-logo.raster { filter: grayscale(1) brightness(.85) contrast(1.1); }
+
+.partner:hover .partner-logo { transform: scale(1.1) rotate(-4deg); }
+
+.partner:hover .partner-logo.raster { filter: grayscale(1) brightness(1.25) contrast(1.1); }
+
+.partner b { color: var(--text); font: 700 17px/1.2 var(--display); }
+
+.partner span { font-size: 14px; }
+
+.partner em {
+  margin-top: 10px;
+  color: var(--text-3);
+  font-size: 12px;
+  font-style: normal;
+  transition: color .25s;
+}
+
+.partner em::after { content: " ↗"; }
+
+.partner:hover em { color: var(--text-2); }
+
 /* ---------------------------------------------------------------- living background */
 
 /* drawn by site.js: drifting grey pixels, and a fading pixel trail behind the pointer */

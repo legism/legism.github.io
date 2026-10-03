@@ -167,8 +167,8 @@
 
   // ------------------------------------------------------------ hover light and tilt
 
-  var GLOW = '.tile, .os, .panel, .stat, .release, .files .col, .recommend, .faq details, .compare';
-  var TILT = '.tile, .os';
+  var GLOW = '.tile, .os, .partner, .panel, .stat, .release, .files .col, .recommend, .faq details, .compare';
+  var TILT = '.tile, .os, .partner';
 
   /**
    * Cards light up where the pointer is (the CSS reads --mx / --my), and the smaller ones
