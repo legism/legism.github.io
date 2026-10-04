@@ -640,6 +640,20 @@ footer .wrap { display: grid; gap: 22px; }
 
 .foot-links a:hover { color: var(--text); }
 
+.contact { margin: 0; color: var(--text-2); font-size: 15px; }
+
+.contact a {
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color .2s;
+}
+
+.contact a:hover { border-color: var(--text); }
+
+.panel .contact { margin: -8px 0 20px; }
+
 footer small { display: block; max-width: 62em; line-height: 1.6; }
 
 /* ---------------------------------------------------------------- inner pages */
